@@ -1,0 +1,78 @@
+import java.util.Random;
+
+public class CartaFutebol {
+    private String nome;
+    private int ataque;
+    private int defesa;
+    private int velocidade;
+
+    public CartaFutebol(String nome) {
+        this.nome = nome;
+        Random random = new Random();
+        this.ataque = random.nextInt(100) + 1;
+        this.defesa = random.nextInt(100) + 1;
+        this.velocidade = random.nextInt(100) + 1;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public int getAtaque() {
+        return ataque;
+    }
+
+    public int getDefesa() {
+        return defesa;
+    }
+
+    public int getVelocidade() {
+        return velocidade;
+    }
+
+    public int getAtributo(String atributo) {
+        return switch (atributo.toLowerCase()) {
+            case "ataque" -> ataque;
+            case "defesa" -> defesa;
+            case "velocidade" -> velocidade;
+            default -> -1;
+        };
+    }
+
+    @Override
+    public String toString() {
+        return nome + " [Ataque: " + ataque + ", Defesa: " + defesa + ", Velocidade: " + velocidade + "]";
+    }
+}
+import java.util.Scanner;
+
+public class JogoSuperTrunfo {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Criando cartas
+        CartaFutebol jogador = new CartaFutebol("Jogador Estrela");
+        CartaFutebol maquina = new CartaFutebol("Máquina Implacável");
+
+        System.out.println("Sua carta: " + jogador);
+        System.out.println("Escolha um atributo para jogar (ataque, defesa, velocidade): ");
+        String atributoEscolhido = scanner.nextLine().toLowerCase();
+
+        int valorJogador = jogador.getAtributo(atributoEscolhido);
+        int valorMaquina = maquina.getAtributo(atributoEscolhido);
+
+        System.out.println("Carta da máquina: " + maquina);
+        System.out.println("Seu valor de " + atributoEscolhido + ": " + valorJogador);
+        System.out.println("Valor da máquina de " + atributoEscolhido + ": " + valorMaquina);
+
+        if (valorJogador > valorMaquina) {
+            System.out.println("Você venceu!");
+        } else if (valorJogador < valorMaquina) {
+            System.out.println("Você perdeu!");
+        } else {
+            System.out.println("Empate!");
+        }
+
+        scanner.close();
+    }
+}
